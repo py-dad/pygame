@@ -1,0 +1,52 @@
+title: "Macon County Morning Update"
+intro: "Here are the top things to know this morning across Macon County:"
+
+weather_auto:
+  enabled: true
+  locations:
+    - label: "Franklin / Otto"
+      lat: 35.1823
+      lon: -83.3815
+    - label: "Highlands"
+      lat: 35.0526
+      lon: -83.1968
+
+# If weather_auto.enabled is false, the script uses this manual weather line:
+weather: "Mostly cloudy. High 49, low 31. Chance of rain this morning."
+
+top_stories:
+  - headline: Panthers win in basketball  
+    body:
+      - Jack drops 50 in the big win
+      - Panthers face tougher test at Enka to keep playoff hopes alive
+    sources:
+      - "https://example.com/source-link"
+  - headline: Park construction begins this month
+    body:
+      - Construction set to beging January 12 on the former Whitmire property
+    sources:
+      - "https://example.com/source-link-2"
+  - headline: Private dump fire still burning
+    body:
+      - Fire began Dec 31 on Wilson Gap Road in Highlands
+      - Crews say about 2 acres in size, and 0 percent contained as of Friday
+    sources:
+      - "https://example.com/source-link-3"
+
+quick_hits:
+  - Library to extend hours in February
+  - Oak Ridge Boys return to Franklin January 21
+  - 2026 election draws a slew of new contenders
+
+coming_up:
+  - Buck Creek Road to close temporarily for repairs
+  - Blood Drives going on next weekend
+
+# Optional: sources not tied to a specific story
+extra_sources:
+  - label: "Macon County Government"
+    url: "https://www.maconnc.org/"
+  - label: "NCDOT Travel Info"
+    url: "https://drivenc.gov/"
+
+byline: "Keith Giles"
