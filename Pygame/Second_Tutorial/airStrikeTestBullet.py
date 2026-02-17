@@ -208,23 +208,6 @@ pygame.time.set_timer(ADDBOSS, 10000)
 
 
 
-#Instantiate player. Right now, this is just a rectangle.
-player = Player()
-
-#create groups to hold enemy sprites, cloud sprites,(positional movements) and all sprites (rendering)
-
-enemies = pygame.sprite.Group()
-clouds = pygame.sprite.Group()
-bosses = pygame.sprite.Group()
-bullet_list = pygame.sprite.Group()
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-
-# Load and play background music
-#changed music from v1
-pygame.mixer.music.load(os.path.join(SCRIPT_DIR, "level2.wav"))
-pygame.mixer.music.play(loops=-1)
-
 # Load all sound files assign to variable triggered by event
 move_up_sound = pygame.mixer.Sound(os.path.join(SCRIPT_DIR, "Rising_putter.ogg"))
 move_down_sound = pygame.mixer.Sound(os.path.join(SCRIPT_DIR, "Falling_putter.ogg"))
@@ -232,142 +215,190 @@ collision_sound = pygame.mixer.Sound(os.path.join(SCRIPT_DIR, "Collision.ogg"))
 bullet_sound = pygame.mixer.Sound(os.path.join(SCRIPT_DIR, "Falling_putter.ogg"))
 explosion_sound = pygame.mixer.Sound(os.path.join(SCRIPT_DIR, "explosion.wav"))
 
-score = 0
+# Game loop - allows for restart
+game_running = True
 
-#variable to keep the main loop running
-running = True
+while game_running:
+    #Instantiate player. Right now, this is just a rectangle.
+    player = Player()
 
-# Main loop
-while running:
-    #Look at every event in the queue
-    for event in pygame.event.get():
-        # Did the user hit a key?
-        if event.type == KEYDOWN:
-            #was it the Esc key? is so, stop loop
-            if event.key == K_ESCAPE:
+    #create groups to hold enemy sprites, cloud sprites,(positional movements) and all sprites (rendering)
+    enemies = pygame.sprite.Group()
+    clouds = pygame.sprite.Group()
+    bosses = pygame.sprite.Group()
+    bullet_list = pygame.sprite.Group()
+    all_sprites = pygame.sprite.Group()
+    all_sprites.add(player)
+
+    # Load and play background music
+    #changed music from v1
+    pygame.mixer.music.load(os.path.join(SCRIPT_DIR, "level2.wav"))
+    pygame.mixer.music.play(loops=-1)
+
+    score = 0
+
+    #variable to keep the main loop running
+    running = True
+
+    # Main loop
+    while running:
+        #Look at every event in the queue
+        for event in pygame.event.get():
+            # Did the user hit a key?
+            if event.type == KEYDOWN:
+                #was it the Esc key? is so, stop loop
+                if event.key == K_ESCAPE:
+                    running = False
+                #was it the space bar? if so, fire a bullet
+                elif event.key == K_SPACE:
+                    bullet = Bullet()
+                    #set the bullet to where the player is
+                    bullet.rect.x = player.rect.x
+                    bullet.rect.y = player.rect.y
+                    #add the bullet to the list
+                    all_sprites.add(bullet)
+                    bullet_list.add(bullet)
+
+            elif event.type == QUIT:
                 running = False
-            #was it the space bar? if so, fire a bullet
-            elif event.key == K_SPACE:
-                bullet = Bullet()
-                #set the bullet to where the player is
-                bullet.rect.x = player.rect.x
-                bullet.rect.y = player.rect.y
-                #add the bullet to the list
-                all_sprites.add(bullet)
-                bullet_list.add(bullet)
-
-        elif event.type == QUIT:
-            running = False
-            
-
-        #timer will fire off this event every 250 milliseconds
-        elif event.type == ADDENEMY:
-            #create the new enemy and add to sprite groups
-            #new_enemy is an instance of the Enemy class and gets all its attributes
-            new_enemy = Enemy()
-            #add new_enemy to sprite group enemies
-            enemies.add(new_enemy)
-            #add new_enemy to all_sprites group
-            all_sprites.add(new_enemy)
-
-        # timer will fire off this event every 1000 milliseconds
-        elif event.type == ADDCLOUD:
-            #create the new cloud and add to sprite group
-            new_cloud = Cloud()
-            clouds.add(new_cloud)
-            all_sprites.add(new_cloud)
-        # listen for event ADDBOSS, and then contstruct a new boss object 
-        elif event.type == ADDBOSS:
-            new_boss = Boss()
-            bosses.add(new_boss)
-            all_sprites.add(new_boss)
 
 
-    for bullet in bullet_list:
-        block_hit_list = pygame.sprite.spritecollide(bullet, enemies, True) 
+            #timer will fire off this event every 250 milliseconds
+            elif event.type == ADDENEMY:
+                #create the new enemy and add to sprite groups
+                #new_enemy is an instance of the Enemy class and gets all its attributes
+                new_enemy = Enemy()
+                #add new_enemy to sprite group enemies
+                enemies.add(new_enemy)
+                #add new_enemy to all_sprites group
+                all_sprites.add(new_enemy)
 
-        for block in block_hit_list:
-            bullet_list.remove(bullet)
-            all_sprites.remove(bullet)
-            explosion_sound.play()
-            score += 1
-            print(score)
+            # timer will fire off this event every 1000 milliseconds
+            elif event.type == ADDCLOUD:
+                #create the new cloud and add to sprite group
+                new_cloud = Cloud()
+                clouds.add(new_cloud)
+                all_sprites.add(new_cloud)
+            # listen for event ADDBOSS, and then contstruct a new boss object
+            elif event.type == ADDBOSS:
+                new_boss = Boss()
+                bosses.add(new_boss)
+                all_sprites.add(new_boss)
 
-        if bullet.rect.y < -10:
-            bullet_list.remove(bullet)
-            all_sprites.remove(bullet)
-           
-    
-    # Get the set of keys pressed and check for user input
-    pressed_keys = pygame.key.get_pressed()
 
-    # Update the player sprite based on user keypresses
-    player.update(pressed_keys)
+        for bullet in bullet_list:
+            block_hit_list = pygame.sprite.spritecollide(bullet, enemies, True)
 
-    # Update the position of enemies and clouds 
-    enemies.update()
-    clouds.update()
-    bosses.update()
-    bullet_list.update()
-    
+            for block in block_hit_list:
+                bullet_list.remove(bullet)
+                all_sprites.remove(bullet)
+                explosion_sound.play()
+                score += 1
+                print(score)
+
+            if bullet.rect.y < -10:
+                bullet_list.remove(bullet)
+                all_sprites.remove(bullet)
+
+
+        # Get the set of keys pressed and check for user input
+        pressed_keys = pygame.key.get_pressed()
+
+        # Update the player sprite based on user keypresses
+        player.update(pressed_keys)
+
+        # Update the position of enemies and clouds
+        enemies.update()
+        clouds.update()
+        bosses.update()
+        bullet_list.update()
 
 
 
-    # Fill the screen with sky blue
-    #screen.fill((135, 206, 250))
-    screen.fill((0,0,0))
 
-    # Draw the player on the screen
-    
+        # Fill the screen with sky blue
+        #screen.fill((135, 206, 250))
+        screen.fill((0,0,0))
 
-    # Create a surface and pass tuple containing width, length
-    #surf is assigned to a surface, but can't tell exactly which surface in the game it applies to
-    surf = pygame.Surface((50,50))
+        # Draw the player on the screen
 
-    # Give the surface a color to sep from b/g
-    surf.fill((0,0,0))
-    rect = surf.get_rect()
 
-    # This line says "draw surf onto the screen at the center"
-    surf_center = (
-        (SCREEN_WIDTH - surf.get_width())/2,
-        (SCREEN_HEIGHT - surf.get_height())/2
-    )
-    screen.blit(surf, surf_center)
-    # draw all sprites
-    for entity in all_sprites:
-        screen.blit(entity.surf,entity.rect)
+        # Create a surface and pass tuple containing width, length
+        #surf is assigned to a surface, but can't tell exactly which surface in the game it applies to
+        surf = pygame.Surface((50,50))
 
-    # Draw the score
-    score_text = font.render(f"Score: {score}", True, (255, 255, 255))
-    screen.blit(score_text, (10, 10))
+        # Give the surface a color to sep from b/g
+        surf.fill((0,0,0))
+        rect = surf.get_rect()
 
-    # check if any enemies have collided with the player. im guessing only two entries can be passed at a time
-        #because it only checks for two objects to collide, not 3 or more. 
-    if pygame.sprite.spritecollideany(player, enemies):
-        # if so, then remove the player and stop the loop
-        player.kill()
+        # This line says "draw surf onto the screen at the center"
+        surf_center = (
+            (SCREEN_WIDTH - surf.get_width())/2,
+            (SCREEN_HEIGHT - surf.get_height())/2
+        )
+        screen.blit(surf, surf_center)
+        # draw all sprites
+        for entity in all_sprites:
+            screen.blit(entity.surf,entity.rect)
 
-        # Stop any moving sounds and play the collision sound
-        move_up_sound.stop()
-        move_down_sound.stop()
-        collision_sound.play()
-        pygame.mixer.music.stop()
-        pygame.mixer.quit()
+        # Draw the score
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_text, (10, 10))
 
-        # Stop the loop
-        running = False
+        # check if any enemies have collided with the player. im guessing only two entries can be passed at a time
+            #because it only checks for two objects to collide, not 3 or more.
+        if pygame.sprite.spritecollideany(player, enemies):
+            # if so, then remove the player
+            player.kill()
 
-    #elif pygame.sprite.spritecollideany(player, bosses):
-        #player.kill()
-        #running = False 
+            # Stop any moving sounds and play the collision sound
+            move_up_sound.stop()
+            move_down_sound.stop()
+            collision_sound.play()
+            pygame.mixer.music.stop()
 
-        
-    #still under For loop
-    pygame.display.flip()
+            # Game Over screen
+            screen.fill((0, 0, 0))
+            game_over_text = font.render("GAME OVER", True, (255, 0, 0))
+            final_score_text = font.render(f"Final Score: {score}", True, (255, 255, 255))
+            restart_text = font.render("Press SPACE to Restart or ESC to Quit", True, (255, 255, 255))
 
-    #Ensure program maintains a rate of 30 fps 
-    clock.tick(30)
+            # Center the text on screen
+            screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2 - 100))
+            screen.blit(final_score_text, (SCREEN_WIDTH // 2 - final_score_text.get_width() // 2, SCREEN_HEIGHT // 2 - 30))
+            screen.blit(restart_text, (SCREEN_WIDTH // 2 - restart_text.get_width() // 2, SCREEN_HEIGHT // 2 + 50))
+
+            pygame.display.flip()
+
+            # Wait for player input
+            waiting = True
+            while waiting:
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        waiting = False
+                        running = False
+                        game_running = False
+                    elif event.type == KEYDOWN:
+                        if event.key == K_ESCAPE:
+                            waiting = False
+                            running = False
+                            game_running = False
+                        elif event.key == K_SPACE:
+                            # Restart the game by breaking out of the current game loop
+                            waiting = False
+                            running = False
+                            # game_running stays True, so outer loop will restart
+
+        #elif pygame.sprite.spritecollideany(player, bosses):
+            #player.kill()
+            #running = False
+
+
+        #still under For loop
+        pygame.display.flip()
+
+        #Ensure program maintains a rate of 30 fps
+        clock.tick(30)
 
 
     #credits
