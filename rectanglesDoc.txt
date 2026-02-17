@@ -1,0 +1,24 @@
+create a rectangle from scratch
+
+	create the object
+	# pass in x and y coords of top left corner, then wid/height
+	rect_1 = pygame.Rect(200, 100 , 150 , 100)
+	
+	then...
+		you must draw it on the screen
+	
+	while run:
+		# pass in surface, color, and object 
+		pygame.draw.rect(screen, (255,0,255), rect_1)
+
+
+
+alt way: derive from an existing object, such as an image
+
+
+example...
+#convert_alpha to maintain transparency
+soldier = pygame.image.load("solider.png").convert_alpha()
+
+rect_2 = solider.get_rect()
+

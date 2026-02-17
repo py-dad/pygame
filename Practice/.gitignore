@@ -1,0 +1,3 @@
+# List files to not send to GitHub
+
+.env

@@ -1,0 +1,2 @@
+seattle, atlanta, chicago, houston, philly
+mariners,braves,cubs,astros,phillies

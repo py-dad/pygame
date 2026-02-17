@@ -1,0 +1,21 @@
+AirStrike 1.0.4 change log
+-------------------------------------------------------------
+
+-new background music
+-enemies move slightly upward
+
+-bigger enemies (boss class, but they can't collide yet)
+-fun to make them get stuck on the screen
+
+todo:
+-bosses aren't colliding
+-bosses get special music
+-improve background
+-need ability to fire at enemies - done
+-need enemies to blow up when hit 
+-keep score (health bar? - goes down when colliding w/ enemy)
+-try to make a second level
+
+
+
+Q2MW-EX26-CFGT

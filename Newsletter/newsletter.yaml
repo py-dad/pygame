@@ -12,35 +12,42 @@ weather_auto:
       lon: -83.1968
 
 # If weather_auto.enabled is false, the script uses this manual weather line:
-weather: "Mostly cloudy. High 49, low 31. Chance of rain this morning."
+weather: 
 
-top_stories:
-  - headline: Panthers win in basketball  
-    body:
-      - Jack drops 50 in the big win
-      - Panthers face tougher test at Enka to keep playoff hopes alive
+top_stories: Planned Water Service Interruption - Wednesday, January 21st
+    body: 
+The Town of Franklin will be replacing equipment at the Upper Brookwood pump station on Wednesday, January 21, 2026. Work will begin at 8:00 a.m. and should conclude by mid-to-late-afternoon.
+
+This replacement and installation will require water service to be interrupted for several hours as they complete this task. Door hangers with a service interruption notice will be placed at homes within the impacted area beginning today, January 6, 2026 and information is being shared via town website and other media outlets.
+
+Impacted streets include: Brookwood Drive, Longview Court, Delta Drive, and Heatherstone Drive.
+
+The notice includes instructions to close all taps and faucets during the service interruption and recommends filling the bathtub or large containers to allow for use during the service interruption for flushing of toilets.
+Should you have any questions, please contact Bill Deal, Public Works Director, at 828-524-2516 x 402.
+      
     sources:
-      - "https://example.com/source-link"
-  - headline: Park construction begins this month
-    body:
-      - Construction set to beging January 12 on the former Whitmire property
+      - 
+  - headline: Franklin agrees to return land to Cherokeee
+    body:Franklin town council voted unanimously Monday to return the Noquisiyi Mound, a site of deep cultural and spiritual importance, to the Eastern Band of Cherokee Indians. 
+    The mound was part of a Cherokee mother town centuries before the founding of the United States but has been under private or municipal ownership for nearly 200 years.
+      
     sources:
-      - "https://example.com/source-link-2"
-  - headline: Private dump fire still burning
+      - "https://abc11.com/post/town-franklin-gives-land-eastern-band-cherokee-indians-north-carolina/18367427/"
+
+  - headline: More measles cases confirmed
     body:
-      - Fire began Dec 31 on Wilson Gap Road in Highlands
-      - Crews say about 2 acres in size, and 0 percent contained as of Friday
-    sources:
-      - "https://example.com/source-link-3"
+      The North Carolina Department of Health and Human Services and Buncombe County Health and Human Services (BCHHS) Division of Public Health today announced additional cases of measles in three siblings in Buncombe County. The family had visited Spartanburg County, South Carolina, where there is a large ongoing measles outbreak approximately 1-2 weeks before the children became sick. 
+      To protect the family’s privacy, no additional information about these cases will be released.
+    
 
 quick_hits:
-  - Library to extend hours in February
-  - Oak Ridge Boys return to Franklin January 21
-  - 2026 election draws a slew of new contenders
+  - Early voting for March primary begins February 12th
+  - 
+  - 
 
 coming_up:
-  - Buck Creek Road to close temporarily for repairs
-  - Blood Drives going on next weekend
+  - 
+  - 
 
 # Optional: sources not tied to a specific story
 extra_sources:
